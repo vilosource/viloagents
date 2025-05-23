@@ -2,6 +2,8 @@ agents:
   - name: DefaultAgent
     class_path: ai_chat_backend.agents.default_agent.DefaultAgent
     description: "General purpose agent"
+    keywords: []
   - name: MathAgent
     class_path: ai_chat_backend.agents.math_agent.MathAgent
     description: "Handles math queries"
+    keywords: ["math", "calculate", "addition", "subtraction", "multiply", "divide"]

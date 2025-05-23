@@ -4,6 +4,8 @@ class DefaultAgent(Agent):
     """Fallback agent for general questions."""
 
     agent_name = "DefaultAgent"
+    # No specific keywords; acts as a catch-all agent.
+    keywords: list[str] = []
 
     def generate_response(self, message: str) -> str:
         return "I'm a default agent responding to: " + message

@@ -1,9 +1,12 @@
+from pathlib import Path
+
 from fastapi import FastAPI, WebSocket
 
 from ..router.router_agent import RouterAgent
 
 app = FastAPI()
-router_agent = RouterAgent()
+CONFIG_PATH = Path(__file__).resolve().parents[2] / "agents.yaml"
+router_agent = RouterAgent.from_config(str(CONFIG_PATH))
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
