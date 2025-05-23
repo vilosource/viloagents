@@ -24,6 +24,7 @@ def test_config_manager_instantiates_agents():
     assert isinstance(agents["DefaultAgent"], DefaultAgent)
     assert agents["DefaultAgent"].description == "General purpose agent"
     assert agents["DefaultAgent"].keywords == []
+    assert agents["DefaultAgent"].model_name.endswith("gpt-3.5-turbo")
     assert isinstance(agents["MathAgent"], MathAgent)
     assert agents["MathAgent"].description == "Handles math queries"
     assert "math" in agents["MathAgent"].keywords

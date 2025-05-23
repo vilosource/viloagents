@@ -18,13 +18,22 @@ class Agent(metaclass=AgentMeta):
     # Principle by allowing new agents to declare their own keywords without
     # modifying the router.
     keywords: List[str] = []
+    # Default model name; subclasses can override.
+    model_name: str = ""
 
-    def __init__(self, description: str = "", keywords: List[str] | None = None) -> None:
+    def __init__(
+        self,
+        description: str = "",
+        keywords: List[str] | None = None,
+        model: str | None = None,
+    ) -> None:
         self.description = description
         if keywords is not None:
             # Instances override the class-level default keywords so strategies
             # can rely on per-agent configuration.
             self.keywords = keywords
+        if model is not None:
+            self.model_name = model
 
     def generate_response(self, message: str) -> str:
         raise NotImplementedError
