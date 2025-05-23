@@ -48,7 +48,13 @@ class ConfigManager:
                 line = line.lstrip()[1:].strip()
             if ":" in line:
                 key, value = line.split(":", 1)
-                current[key.strip()] = value.strip().strip('"')
+                value = value.strip()
+                if value.startswith("[") and value.endswith("]"):
+                    items = value[1:-1].split(',')
+                    value = [item.strip().strip('"').strip("'") for item in items if item.strip()]
+                else:
+                    value = value.strip('"')
+                current[key.strip()] = value
         return result
 
     def instantiate_agents(self):
@@ -68,5 +74,5 @@ class ConfigManager:
             module_name, class_name = agent_cfg.class_path.rsplit(".", 1)
             module = importlib.import_module(module_name)
             cls = getattr(module, class_name)
-            agents[agent_cfg.name] = cls(agent_cfg.description)
+            agents[agent_cfg.name] = cls(agent_cfg.description, keywords=agent_cfg.keywords)
         return agents
