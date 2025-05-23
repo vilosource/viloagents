@@ -4,6 +4,7 @@ from typing import Dict
 
 from ..agents.base import AGENT_REGISTRY, Agent
 from ..config.loader import ConfigManager
+
 from .strategy import RoutingStrategy, KeywordRoutingStrategy, SimpleStrategy
 
 class RouterAgent:
@@ -13,10 +14,12 @@ class RouterAgent:
         # Dependency injection of collaborators keeps the router flexible and
         # testable. When ``agents`` is ``None`` we fall back to the registry of
         # statically defined agents, preserving backward compatibility.
+
         # Use a keyword-based routing strategy by default to better match user
         # intent.  The *Strategy* pattern allows swapping this out for a more
         # advanced LLM-driven strategy without modifying this class.
         self.strategy = strategy or KeywordRoutingStrategy()
+        self.strategy = strategy or SimpleStrategy()
         if agents is None:
             agents = {name: cls() for name, cls in AGENT_REGISTRY.items()}
         self.agents = agents

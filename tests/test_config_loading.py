@@ -27,6 +27,9 @@ def test_config_manager_instantiates_agents():
     assert isinstance(agents["MathAgent"], MathAgent)
     assert agents["MathAgent"].description == "Handles math queries"
     assert "math" in agents["MathAgent"].keywords
+    assert isinstance(agents["MathAgent"], MathAgent)
+    assert agents["MathAgent"].description == "Handles math queries"
+
 
 
 def test_router_agent_from_config():
