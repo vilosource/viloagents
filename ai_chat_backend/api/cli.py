@@ -1,6 +1,9 @@
+from pathlib import Path
+
 from ..router.router_agent import RouterAgent
 
-router_agent = RouterAgent()
+CONFIG_PATH = Path(__file__).resolve().parents[2] / "agents.yaml"
+router_agent = RouterAgent.from_config(str(CONFIG_PATH))
 
 def main():
     print("Enter text (type 'exit' to quit):")
