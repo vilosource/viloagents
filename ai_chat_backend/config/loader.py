@@ -68,5 +68,10 @@ class ConfigManager:
             module_name, class_name = agent_cfg.class_path.rsplit(".", 1)
             module = importlib.import_module(module_name)
             cls = getattr(module, class_name)
-            agents[agent_cfg.name] = cls(agent_cfg.description)
+            agents[agent_cfg.name] = cls(
+                agent_cfg.description,
+                model_name=agent_cfg.model,
+            )
+            if agent_cfg.system_prompt:
+                agents[agent_cfg.name].system_prompt = agent_cfg.system_prompt
         return agents

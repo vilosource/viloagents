@@ -4,6 +4,7 @@ class DefaultAgent(Agent):
     """Fallback agent for general questions."""
 
     agent_name = "DefaultAgent"
+    system_prompt = "You are a helpful general-purpose assistant."
 
     def generate_response(self, message: str) -> str:
-        return "I'm a default agent responding to: " + message
+        return super().generate_response(message)

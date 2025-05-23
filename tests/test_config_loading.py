@@ -23,8 +23,14 @@ def test_config_manager_instantiates_agents():
     assert set(agents.keys()) == {"DefaultAgent", "MathAgent"}
     assert isinstance(agents["DefaultAgent"], DefaultAgent)
     assert agents["DefaultAgent"].description == "General purpose agent"
+    assert agents["DefaultAgent"].model_name == "gpt-3.5-turbo"
+    assert (
+        agents["DefaultAgent"].system_prompt
+        == "You are a helpful general-purpose assistant."
+    )
     assert isinstance(agents["MathAgent"], MathAgent)
     assert agents["MathAgent"].description == "Handles math queries"
+    assert agents["MathAgent"].model_name == "gpt-3.5-turbo"
 
 
 def test_router_agent_from_config():
@@ -32,4 +38,4 @@ def test_router_agent_from_config():
     assert isinstance(router.agents["DefaultAgent"], DefaultAgent)
     assert isinstance(router.agents["MathAgent"], MathAgent)
     response = router.generate_response("hello")
-    assert response.startswith("I'm a default agent")
+    assert response.startswith("ECHO:")

@@ -2,6 +2,10 @@ agents:
   - name: DefaultAgent
     class_path: ai_chat_backend.agents.default_agent.DefaultAgent
     description: "General purpose agent"
+    model: gpt-3.5-turbo
+    system_prompt: "You are a helpful general-purpose assistant."
   - name: MathAgent
     class_path: ai_chat_backend.agents.math_agent.MathAgent
     description: "Handles math queries"
+    model: gpt-3.5-turbo
+    system_prompt: "You are a math expert AI that solves problems step by step."
