@@ -28,9 +28,11 @@ def test_config_manager_instantiates_agents():
         agents["DefaultAgent"].system_prompt
         == "You are a helpful general-purpose assistant."
     )
+    assert agents["DefaultAgent"].keywords == []
     assert isinstance(agents["MathAgent"], MathAgent)
     assert agents["MathAgent"].description == "Handles math queries"
     assert agents["MathAgent"].model_name == "gpt-3.5-turbo"
+    assert "math" in agents["MathAgent"].keywords
 
 
 def test_router_agent_from_config():
