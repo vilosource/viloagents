@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import Dict, Type, Any
+from typing import Dict, Type, Any, List
 
 try:
     from langchain.chat_models import ChatOpenAI  # type: ignore
@@ -33,13 +33,28 @@ class AgentMeta(type):
         if agent_name:
             AGENT_REGISTRY[agent_name] = cls
 
+
 class Agent(metaclass=AgentMeta):
     agent_name: str = ""
+    # Each agent can specify routing keywords.  This supports the Open/Closed
+    # Principle by allowing new agents to declare their own keywords without
+    # modifying the router.
+    keywords: List[str] = []
     system_prompt: str = "You are a helpful assistant."
 
-    def __init__(self, description: str = "", model_name: str | None = None) -> None:
+    def __init__(
+        self,
+        description: str = "",
+        model_name: str | None = None,
+        keywords: List[str] | None = None,
+    ) -> None:
         self.description = description
         self.model_name = model_name or "gpt-3.5-turbo"
+
+        if keywords is not None:
+            # Instances override the class-level default keywords so strategies
+            # can rely on per-agent configuration.
+            self.keywords = keywords
 
         if ChatOpenAI is not None:
             # Ensure OpenRouter endpoint is used if no base specified
