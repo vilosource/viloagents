@@ -8,6 +8,8 @@ class AgentConfig(BaseModel):
     description: str = ""
     # Optional list of keywords used by routing strategies.
     keywords: List[str] = []
+    # Optional model name used by the agent (e.g. openrouter/gpt-4).
+    model: str | None = None
 
 class Config(BaseModel):
     agents: List[AgentConfig]

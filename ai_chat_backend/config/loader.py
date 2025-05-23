@@ -74,5 +74,9 @@ class ConfigManager:
             module_name, class_name = agent_cfg.class_path.rsplit(".", 1)
             module = importlib.import_module(module_name)
             cls = getattr(module, class_name)
-            agents[agent_cfg.name] = cls(agent_cfg.description, keywords=agent_cfg.keywords)
+            agents[agent_cfg.name] = cls(
+                agent_cfg.description,
+                keywords=agent_cfg.keywords,
+                model=agent_cfg.model,
+            )
         return agents

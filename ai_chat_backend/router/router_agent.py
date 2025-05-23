@@ -16,10 +16,9 @@ class RouterAgent:
         # statically defined agents, preserving backward compatibility.
 
         # Use a keyword-based routing strategy by default to better match user
-        # intent.  The *Strategy* pattern allows swapping this out for a more
+        # intent. The *Strategy* pattern allows swapping this out for a more
         # advanced LLM-driven strategy without modifying this class.
         self.strategy = strategy or KeywordRoutingStrategy()
-        self.strategy = strategy or SimpleStrategy()
         if agents is None:
             agents = {name: cls() for name, cls in AGENT_REGISTRY.items()}
         self.agents = agents

@@ -3,7 +3,9 @@ agents:
     class_path: ai_chat_backend.agents.default_agent.DefaultAgent
     description: "General purpose agent"
     keywords: []
+    model: openrouter/gpt-3.5-turbo
   - name: MathAgent
     class_path: ai_chat_backend.agents.math_agent.MathAgent
     description: "Handles math queries"
     keywords: ["math", "calculate", "addition", "subtraction", "multiply", "divide"]
+    model: openrouter/gpt-3.5-turbo
