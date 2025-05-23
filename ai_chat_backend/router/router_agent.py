@@ -3,14 +3,30 @@ from __future__ import annotations
 from typing import Dict
 
 from ..agents.base import AGENT_REGISTRY, Agent
+from ..config.loader import ConfigManager
 from .strategy import RoutingStrategy, SimpleStrategy
 
 class RouterAgent:
-    def __init__(self, strategy: RoutingStrategy | None = None) -> None:
+    """Select the appropriate agent to handle a user message."""
+
+    def __init__(self, agents: Dict[str, Agent] | None = None, strategy: RoutingStrategy | None = None) -> None:
+        # Dependency injection of collaborators keeps the router flexible and
+        # testable. When ``agents`` is ``None`` we fall back to the registry of
+        # statically defined agents, preserving backward compatibility.
         self.strategy = strategy or SimpleStrategy()
-        self.agents: Dict[str, Agent] = {name: cls() for name, cls in AGENT_REGISTRY.items()}
+        if agents is None:
+            agents = {name: cls() for name, cls in AGENT_REGISTRY.items()}
+        self.agents = agents
+
+    @classmethod
+    def from_config(cls, config_path: str, strategy: RoutingStrategy | None = None) -> "RouterAgent":
+        """Factory method to construct a router from a YAML configuration."""
+        manager = ConfigManager(config_path)
+        agents = manager.instantiate_agents()
+        return cls(agents=agents, strategy=strategy)
 
     def generate_response(self, message: str) -> str:
+        """Route the user message to the chosen agent and return its response."""
         agent_name = self.strategy.choose_agent(message, self.agents)
         agent = self.agents[agent_name]
         return agent.generate_response(message)
