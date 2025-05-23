@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "ai-chat-backend"
+version = "0.1.0"
+description = "Modular AI chat backend"
+authors = ["AI <example@example.com>"]
+readme = "README.md"
+packages = [{include = "ai_chat_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "*"
+uvicorn = "*"
+langchain = "*"
+openai = "*"
+pyyaml = "*"
+pydantic = "*"
+websockets = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+
+[tool.poetry.scripts]
+chat-server = "ai_chat_backend.main:main"
+chat-cli = "ai_chat_backend.api.cli:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
